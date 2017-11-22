@@ -18,11 +18,10 @@ echo "⋅ Creating instance…"
 
 echo "Creating instance"
 cozy-stack instances add --dev --host 0.0.0.0 --apps drive,photos,collect,settings,onboarding --passphrase "$server_pass" "${instance_domain}:${public_port}"
-# echo "⋅ Creating certificate…"
-# sed "s/%PORT%/$public_port/g; s/%DOMAIN%/$instance_domain/g; s/%SERVER_PORT%/$server_port/g" /etc/cozy/nginx-config > "/etc/nginx/sites-available/${instance_domain}.conf"
-# ln -s "/etc/nginx/sites-available/${instance_domain}.conf" /etc/nginx/sites-enabled/
-# echo "⋅ Starting NGinx…"
-# service nginx start
+sed "s/%PORT%/$public_port/g; s/%DOMAIN%/$instance_domain/g; s/%SERVER_PORT%/$server_port/g" /etc/cozy/nginx-config > "/etc/nginx/sites-available/${instance_domain}.conf"
+ln -s "/etc/nginx/sites-available/${instance_domain}.conf" /etc/nginx/sites-enabled/
+echo "⋅ Starting NGinx…"
+service nginx start
 
 echo "Running"
 tail -f /var/log/cozy/cozy.log
